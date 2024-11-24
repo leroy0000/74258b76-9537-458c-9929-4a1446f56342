@@ -15,13 +15,11 @@ class GenerateFeedbackReport
         $response = \App\Models\Response::with(['student', 'assessment'])->get();
         $questions = \App\Models\Question::all();
         $studentResponse = $response->filter(fn($res) => isset($res['student_id']) && $res['student_id'] === $this->studentId)->sortByDesc('completed')->first();
-        $responseResults = $studentResponse;
         $answers = $studentResponse->fetchResponses();
         $totalCorrect = 0;
         $totalQuestions = $questions->count();
-        unset($responseResults['responses']);
-        $studentName = $responseResults->student->firstName . ' ' . $responseResults->student->lastName;
-        $completedDate = Carbon::createFromFormat('d/m/Y H:i:s', $responseResults['completed']);
+        $studentName = $studentResponse->student->firstName . ' ' . $studentResponse->student->lastName;
+        $completedDate = Carbon::createFromFormat('d/m/Y H:i:s', $studentResponse['completed']);
         $answersStr = "";
 
         foreach ($answers as $value) {
@@ -39,8 +37,8 @@ class GenerateFeedbackReport
             }
         }
 
-        render("{$studentName} recently completed {$responseResults->assessment->name} assessment on {$completedDate->format('jS F Y g:i A')}");
-        render("He got {$totalCorrect} questions right out of {$totalQuestions}. Deteails by strand given below:");
+        render("{$studentName} recently completed {$studentResponse->assessment->name} assessment on {$completedDate->format('jS F Y g:i A')}");
+        render("He got {$totalCorrect} questions right out of {$totalQuestions}. Details by strand given below:");
         render($answersStr);
     }
 }

@@ -17,8 +17,8 @@ class GenerateProgressReport
         $student = \App\Models\Student::find($this->studentId);
         $studentResponse = $responseCollection->filter(fn($res) => isset($res['student_id']) && $res['student_id'] === $this->studentId)->sortBy('completed')->all();
         $studentName = $student->firstName . ' ' . $student->lastName;
-
         $assessmentResponseData = array();
+
         foreach ($studentResponse as $response) {
             $assessmentResponseData[$response->assessment->name][] = $response;
         }
@@ -26,7 +26,9 @@ class GenerateProgressReport
         foreach ($assessmentResponseData as $assessmentName => $data) {
             $assessmentTimesTaken = count($assessmentResponseData[$assessmentName]);
             $scoreDiff = $assessmentResponseData[$assessmentName][$assessmentTimesTaken - 1]['raw_score'] - $assessmentResponseData[$assessmentName][0]['raw_score'];
+
             render("{$studentName} has completed {$assessmentName} assessment {$assessmentTimesTaken} times in total. Date and raw score given below: \r");
+
             foreach ($data as $response) {
                 $completedDate = Carbon::createFromFormat('d/m/Y H:i:s', $response['completed']);
                 render("Date: {$completedDate->format('jS F Y g:i A')}, Raw Score: {$response['raw_score']} out of {$questionCount}");
@@ -34,11 +36,13 @@ class GenerateProgressReport
 
             render("<br />");
 
-            if($scoreDiff < 0) {
+            if ($scoreDiff < 0) {
                 $scoreDiffLess = abs($scoreDiff);
                 render("{$studentName} got {$scoreDiffLess} less correct answers in the recent completed assessment than the oldest.");
-            } else {
+            } elseif ($scoreDiff > 0) {
                 render("{$studentName} got {$scoreDiff} more correct answers in the recent completed assessment than the oldest.");
+            } else {
+                render("{$studentName} got the same number of correct answers in the recent completed assessment than the oldest.")
             }
         }
     }

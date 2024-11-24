@@ -38,7 +38,7 @@ class GenerateDiagnosticReport
         $completedDate = Carbon::createFromFormat('d/m/Y H:i:s', $responseResults['completed']);
         
         render("{$studentName} recently completed {$responseResults->assessment->name} assessment on {$completedDate->format('jS F Y g:i A')}");
-        render("He got {$totalCorrect} questions right out of {$totalQuestions}. Deteails by strand given below: \r");
+        render("He got {$totalCorrect} questions right out of {$totalQuestions}. Details by strand given below: \r");
         foreach ($strandCount as $strand => $strandData) {
             render("{$strand}: {$strandData['correct_count']} out of {$strandData['total_count']} correct");
         }

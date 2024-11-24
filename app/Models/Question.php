@@ -33,6 +33,7 @@ class Question extends Model
             $tmp['config_options'] = json_encode($question['config']['options']);
             $questionArr[] = $tmp;
         }
+        
         return $questionArr;
     }
 

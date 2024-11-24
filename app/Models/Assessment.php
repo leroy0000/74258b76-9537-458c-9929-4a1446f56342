@@ -36,6 +36,7 @@ class Assessment extends Model
             $tmp['questions'] = json_encode($assessment['questions']);
             $assessmentArr[] = $tmp;
         }
+        
         return $assessmentArr;
     }
 }

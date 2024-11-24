@@ -34,6 +34,7 @@
             $json = File::get($filePath);
             $responseData = json_decode($json, true);
             $responseArr = [];
+
             foreach ($responseData as $response) {
                 if (!isset($response['completed'])) {
                     continue;
@@ -51,6 +52,7 @@
 
                 $responseArr[] = $tmp;
             }
+            
             return $responseArr;
         }
 

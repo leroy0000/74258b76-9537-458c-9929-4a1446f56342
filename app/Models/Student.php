@@ -26,6 +26,7 @@
             }
 
             $json = File::get($filePath);
+            
             return json_decode($json, true);
         }
     }
