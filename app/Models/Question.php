@@ -36,8 +36,14 @@ class Question extends Model
         return $questionArr;
     }
 
-    public function fetchQuestions()
+    public function fetchQuestionOptions()
     {
         return json_decode($this->config_options, true);
+    }
+
+    public function getQuestionOption($optionId)
+    {
+        $options = collect($this->fetchQuestionOptions());
+        return $options->firstWhere('id', $optionId);
     }
 }
