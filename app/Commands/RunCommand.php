@@ -30,15 +30,9 @@ class RunCommand extends Command
     {
         render("Please enter the following");
         $studentId = $this->ask('Student ID: ');
-        if (!empty($studentId)) {
-            $student = new \App\Actions\GetStudent($studentId);
-            if (!$student->execute()) {
-                render("Invalid student ID. Please try again.");
-                return;
-            }
-        }
-        else {
-            render("You need to enter a Student ID. Please try again.");
+        $student = \App\Models\Student::find($studentId);
+        if (!$student) {
+            render("Invalid student ID. Please try again.");
             return;
         }
 

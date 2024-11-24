@@ -14,10 +14,9 @@ class GenerateProgressReport
     {
         $responseCollection = \App\Models\Response::with(['student', 'assessment'])->get();
         $questionCount = \App\Models\Question::count();
-        $student = new \App\Actions\GetStudent($this->studentId);
-        $studentData = $student->execute();
+        $student = \App\Models\Student::find($this->studentId);
         $studentResponse = $responseCollection->filter(fn($res) => isset($res['student_id']) && $res['student_id'] === $this->studentId)->sortBy('completed')->all();
-        $studentName = $studentData->firstName . ' ' . $studentData->lastName;
+        $studentName = $student->firstName . ' ' . $student->lastName;
 
         $assessmentResponseData = array();
         foreach ($studentResponse as $response) {
