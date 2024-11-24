@@ -11,4 +11,4 @@ services:
     container_name: reports_cli_test
     volumes:
       - .:/app
-    command: ["vendor/bin/phpunit"] 
+    command: ["./vendor/bin/pest"] 
