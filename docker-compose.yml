@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    container_name: reports_cli_app
+    volumes:
+      - .:/app
+    command: ["php", "reports-cli", "run"]
+
+  test:
+    build: .
+    container_name: reports_cli_test
+    volumes:
+      - .:/app
+    command: ["vendor/bin/phpunit"] 
