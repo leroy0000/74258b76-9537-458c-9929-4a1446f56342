@@ -42,7 +42,7 @@ class GenerateProgressReport
             } elseif ($scoreDiff > 0) {
                 render("{$studentName} got {$scoreDiff} more correct answers in the recent completed assessment than the oldest.");
             } else {
-                render("{$studentName} got the same number of correct answers in the recent completed assessment than the oldest.")
+                render("{$studentName} got the same number of correct answers in the recent completed assessment than the oldest.");
             }
         }
     }
